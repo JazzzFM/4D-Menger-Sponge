@@ -1,0 +1,1 @@
+c++ main.cpp -o go -lGL -lGLU -lglut
