@@ -151,6 +151,7 @@ void drawLattice(int p, int n, int ternary, double Rs, const Matrix4D& M) {
 						a0 = a0 - 0.5*(n-1) * Vector4D(ds, ds, ds, ds);
 						Hypercube cube = Hypercube(rs, a0, M, 1.75 * Rs);
 						drawHypercube(8, cube);
+						//cube.empty();
 					}
 				}
 }
@@ -211,12 +212,12 @@ void Draw() {
 		Matrix4D M = Matrix4D(
         	                                1, 0, 0, 0,
         	                                0, 1, 0, 0,
-        	                                0, 0, cos(rot),-sin(rot),
-        	                                0, 0, sin(rot), cos(rot)
+        	                                0, 0, cos(angle),-sin(angle),
+        	                                0, 0, sin(angle), cos(angle)
         	                                );
 		double radioDeLatice = 10;
 		double layers = iter;
-		double compliment = 1;
+		double compliment = 0;
 		drawLattice(stlP, layers, compliment, radioDeLatice, M);
 	
 	}
@@ -471,7 +472,7 @@ void TimerFunction(int value) {
 	count += 0.0;
 	rotSpeed += 0.00;
 	ciclo += 1;
-	angle += 0.006283;
+	angle += 0.1;
 
 	if (count > 2 * M_PI) count = 0;
 	if (ciclo > 100) ciclo = 1; //CICLO NUNCA ES CERO JAJAJA
