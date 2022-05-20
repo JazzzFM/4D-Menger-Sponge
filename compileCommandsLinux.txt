@@ -1,7 +1,10 @@
-//LINUX commands
+//LINUX commands for 64bit and 18.04 in above ubuntu use
 c++ main.cpp -o go -lGL -lGLU -lglut
 ./go
 
+
+//for ubuntu 16.04 use flag
+c++ main.cpp -o go -lGL -lGLU -lglut -std=c++11
 
 
 e, E	: move camera up and down
