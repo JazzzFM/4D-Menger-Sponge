@@ -1,3 +1,4 @@
+#include <unistd.h>
 #include <stdio.h>
 #include <math.h>
 #include <GL/glut.h>
@@ -50,6 +51,10 @@ int pass2 = 0;
 int ITT = 35;
 int stlP = 8;
 int complemento = 0;
+int xpos = 1;
+int ypos = 1;
+int zpos = 1;
+
 
 //////////////////////////////////////
 //                                  
@@ -197,7 +202,18 @@ void interface();
 void Setup() {
 
 	if (ciclo == 0) {
-	
+		cout << endl;
+		for (int i = 0; i < 1000; i++) {
+			for (int j = 0; j < 81; j++)
+				if (ternaryCat(i, j, 0, 0) == 1) {
+					cout << "0";
+				} else {cout << " ";}
+		
+			cout << endl;
+			if (i%100 == 0) sleep(1);
+		}
+		
+		
 	}
 
 }
@@ -218,14 +234,23 @@ void Draw() {
 		Matrix4D M = Matrix4D(
         	                                1, 0, 0, 0,
         	                                0, 1, 0, 0,
-        	                                0, 0, cos(angle),-sin(angle),
-        	                                0, 0, sin(angle), cos(angle)
+        	                                0, 0, cos(rot),-sin(rot),
+        	                                0, 0, sin(rot), cos(rot)
         	                                );
 		double radioDeLatice = 10;
 		double layers = iter;
-		double compliment = 0;
-		drawLattice(stlP, layers, complemento, radioDeLatice, M);
+		double rs = 1.0;
+		
+		//HyperCube
+		
+		if (xpos%2 == 0) {	
+		Hypercube cube = Hypercube(rs, Vector4D(0, 0, 0, 0), M, 1.75 * rs);
+		drawHypercube(8, cube);
 	
+		} else {
+		//4D Menger's sponge
+		drawLattice(stlP, layers, complemento, radioDeLatice, M);
+		}
 	}
 }
 
@@ -253,7 +278,8 @@ Vector3D piecewise(double t, const Vector3D& a, const Vector3D& b) {
 void drawLine(const Vector3D& a, const Vector3D& b) {
 
         glColor3ub(0, 0, 0);
-        glBegin(GL_LINES);
+        glLineWidth(3.0);
+	glBegin(GL_LINES);
         glVertex3f(a.x(), a.y(), a.z());
         glVertex3f(b.x(), b.y(), b.z());
         glEnd();
@@ -410,7 +436,6 @@ int main(int argc, char **argv)
 	glutCreateWindow(" JAZ 4D	U.U ");
 	ProcessMenu(1);
 	init(count);
-
 	glutDisplayFunc(display);
 	glutKeyboardFunc(keyboard);
 	glutTimerFunc(20, TimerFunction, 1);
@@ -604,7 +629,33 @@ void keyboard(unsigned char key, int x, int y) {
                 case 'L':
                         complemento = 0;
                 break;
+			
+		case 'x':
+			xpos++;
+		break;
 
+		case 'X':
+			xpos--;
+		break;
+
+		case 'y':
+			ypos++;
+		break;
+
+		case 'Y':
+			ypos--;
+		break;
+
+		case 'z':
+			zpos++;
+		break;
+
+		case 'Z':
+			zpos--;
+		break;
+	
+
+		
 	}
 
 	glutPostRedisplay();
