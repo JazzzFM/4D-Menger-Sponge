@@ -49,7 +49,7 @@ int pass1 = 0;
 int pass2 = 0;
 int ITT = 35;
 int stlP = 8;
-
+int complemento = 0;
 
 //////////////////////////////////////
 //                                  
@@ -137,9 +137,11 @@ bool ternaryCat(int i, int j, int k, int l){
 
 void drawLattice(int p, int n, int ternary, double Rs, const Matrix4D& M) {
 	
+	ternary %= 2;	
 	p %= n;	
 	double ds = Rs/(double) n;
 	double rs = 0.5 * ds;
+	int cont = 0;
 	for (int i = 0; i < n; i++)
 		for (int j = 0; j < n; j++)
 			for (int k = 0; k < n; k++)
@@ -152,8 +154,12 @@ void drawLattice(int p, int n, int ternary, double Rs, const Matrix4D& M) {
 						Hypercube cube = Hypercube(rs, a0, M, 1.75 * Rs);
 						drawHypercube(8, cube);
 						//cube.empty();
+						
+						cont++;
 					}
 				}
+
+	cout << "\ncont := "  << cont;
 }
 
 
@@ -218,7 +224,7 @@ void Draw() {
 		double radioDeLatice = 10;
 		double layers = iter;
 		double compliment = 0;
-		drawLattice(stlP, layers, compliment, radioDeLatice, M);
+		drawLattice(stlP, layers, complemento, radioDeLatice, M);
 	
 	}
 }
@@ -589,6 +595,14 @@ void keyboard(unsigned char key, int x, int y) {
 
                 case 'I':
                         iter = 27;
+                break;
+
+		case 'l':
+                        complemento += 1;
+                break;
+
+                case 'L':
+                        complemento = 0;
                 break;
 
 	}
