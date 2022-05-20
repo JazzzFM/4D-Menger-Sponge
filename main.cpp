@@ -159,7 +159,7 @@ void drawLattice(int p, int n, int ternary, double Rs, const Matrix4D& M) {
 					}
 				}
 
-	cout << "\ncont := "  << cont;
+	//cout << "\ncont := "  << cont;
 }
 
 
